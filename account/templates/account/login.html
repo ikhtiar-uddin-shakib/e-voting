@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %} DUCSU | Login{% endblock %}
+{% block content %}
+
+    <div class="bg-[#032245] h-screen">
+       
+
+            <div class="flex mx-auto pt-14 justify-center">
+
+                <div class="pt-4 w-1/2">
+                    <img src="{% static 'images/log.png' %}" alt=" photo">
+                </div>               
+     
+                <div class="bg-white w-1.5/3  border mr-4 rounded-md p-12 text-gray-600">
+                    <h1 class="text-4xl block text-center font-semibold">Login</h1>
+                    {% include 'includes/alerts.html' %}
+                    <hr class="pt-6">
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="mt-2">
+                            <label for="username" class="block  text-xl mb-2">Username</label>
+                            <input type="text" class="border w-full px-2 py-2 focus:outline-none focus:ring-0  text-xl focus:border-gray-600"
+                                id="username" name="username" placeholder="Username">
+                        </div>
+        
+                        <div class="mt-2">
+                        <label for="password" class="block  text-xl mb-2">Password</label>
+                        
+                        <input type="password"class="border w-full px-2 py-2 focus:outline-none focus:ring-0  text-xl focus:border-gray-600"
+                            id="password" name="password" placeholder="Password">
+                            
+                        </div>
+        
+                        <div class="mt-2 flex justify-between items-center">
+        
+                        </div>
+
+                        <div class="pb-8 pt-4">
+                            <a class="text-xl text-blue-500 " href="{% url 'forgotPassword' %}">Forgot Password?</a>
+                        </div>
+        
+                        <div class="pt-8 flex justify-between">
+                            <div class="">
+                                <button type="submit" class="bg-blue-700 p-2 rounded-md text-white hover:bg-blue-900" name="login">
+                                    <i class="fa fa-sign-in"></i> Sign In</button>
+                            </div>
+                        
+                            <div class="pt-2">
+                                <a  class="bg-blue-700 p-3 rounded-md text-white hover:text-white hover:bg-blue-900" href="{% url 'register' %}"><i class="fa fa-upload"></i> Register</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+
+            </div>
+
+
+    </div>
+
+ 
+{% endblock content %} 

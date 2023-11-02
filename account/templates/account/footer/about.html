@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="bg-[#032245] text-gray">
+    <div style="max-width: 1240px; margin-left: 100px;">
+        <div class="flex justify-center item-center gap-10"> <img src="{% static 'images/ducsu_logo.png' %}"
+                style="height: 160px;" alt="logo"></div>
+        <div class="flex gap-10">
+            <div class="w-10">
+                <ul class="sticky top-0 text-lg text-gray">
+                    <li class="font-bold hover:text-pink-400"><a href="#overview">Overview</a></li>
+                    <li class="font-bold hover:text-pink-400"><a href="#objectives">Objectives</a></li>
+                    <li class="font-bold hover:text-pink-400"><a href="#usage">Usage</a></li>
+                    <li class="font-bold hover:text-pink-400"><a href="#technologies">Technologies</a></li>
+                </ul>
+            </div>
+            <div class="flex-auto w-64 ms-10 p-3 font-light text-gray text-justify">
+                <div class="font-light mb-4" id="overview">
+                    <span class="font-bold">Overview</span> <br>
+                    <div class="px-5">
+                        The DUCSU Online Voting System
+                        is a groundbreaking project that aims to bring the power of democratic participation to people
+                        far
+                        and wide. While the project title references "DUCSU," it is designed as a versatile online
+                        voting
+                        platform accessible to institutions, organizations, and communities globally. This system
+                        provides a
+                        modernized, secure, and user-friendly means of conducting elections and decision-making
+                        processes,
+                        transcending geographical boundaries.
+                    </div>
+                </div>
+                <div class="text-md mb-4" id="objectives">
+                    <span class="font-bold">Objectives</span> <br>
+                    <ol class="px-5">
+                        <li> 1. To offer a flexible and adaptable online voting platform for a wide range of
+                            applications,
+                            including
+                            student elections, organizational decision-making, and community referendums.
+
+                        </li>
+                        <li> 2. To ensure secure and transparent digital voting processes, increasing accessibility and
+                            participation.</li>
+                        <li> 3. To simplify the administration of elections, reducing administrative overhead and paper
+                            usage.
+                        </li> 4. To create a robust and scalable system that can be tailored to the unique needs of
+                        various
+                        institutions and communities.
+                    </ol>
+                </div>
+                <div class="text-md mb-4" id="usage">
+                    <span class="font-bold">Usage</span> <br>
+                    <div class="px-5">
+                        <h4 class="font-semibold mb-1">User Registration and Authentication - </h4>
+
+                        Individuals or eligible members of institutions can create accounts with authentication
+                        processes
+                        tailored to specific requirements.
+
+                        <h4 class="font-semibold mb-1">Election Setup - </h4>
+                        Administrators can configure elections, including candidate registration, voting periods, and
+                        ballot
+                        design.
+                        Customizable options for various voting methods, such as single-choice, ranked choice, or
+                        referendums.
+                        <h4 class="font-semibold mb-1">Online Voting - </h4>
+                        Registered voters can cast their ballots securely from any location with an internet connection.
+                        Strict identity verification measures are employed to prevent duplicate or fraudulent voting.
+                        <h4 class="font-semibold mb-1">Results and Reporting - </h4>
+                        Real-time vote counting, result reporting, and auditing features.
+                        Transparent and secure results publication for stakeholders.
+                        <h4 class="font-semibold mb-1">Security Measures - </h4>
+                        Robust security features, including encryption, user authentication, and audit trails to
+                        safeguard
+                        the integrity of the system.
+                        <h4 class="font-semibold mb-1">Customizability - </h4>
+                        The system can be tailored to meet the specific requirements of different institutions and
+                        communities.
+                        Integration capabilities with existing databases and user management systems.
+                        <h4 class="font-semibold mb-1">Benefits - </h4>
+                        Enhanced accessibility and participation, breaking down geographical barriers.
+                        Streamlined and cost-effective election administration.
+                        Improved transparency, accountability, and security in the voting process.
+                        Reduced environmental impact through decreased paper usage.
+                        <h4 class="font-semibold mb-1">Implementation - </h4>
+                        Develop a versatile and customizable online voting platform.
+                        Ensure secure hosting and regular security updates.
+                        Collaborate with institutions, organizations, and communities for implementation and
+                        customization.
+                    </div>
+                </div>
+                <div class="text-md mb-4" id="technologies">
+                    <span class="font-bold mb-1">Technologies</span> <br>
+                    <div class="px-5">HTML, CSS, Js, Tailwind, Django, Django Rest api, PostgreeSQL</div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+{% endblock content %}

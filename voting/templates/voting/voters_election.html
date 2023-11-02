@@ -1,0 +1,60 @@
+{% extends 'root.html' %}
+
+{% block head_title %} DUCSU | Election{% endblock %}
+
+{% block content %}
+<section class="content" style="max-height: 80vh; overflow-y: auto;">
+    <h1 class="page-header text-center title"><b>{{ election.title }}</b></h1>
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+
+     <h1 class=" text-2xl text-blue-800">Hi {{ request.user.username }}, you can vote in an election at once. After the
+        finished of one election in a period of time, you can vote another election.</h1>
+      <b>For voting, Choose an Election that you wanna vote</b>
+      <div class="box-header with-border">
+        <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat">
+          <i class="far fa-plus-square"></i> Election</a>
+      </div>
+    
+    </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block modal %}
+<div class="modal fade" id="addnew">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><b>Select Election</b></h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="POST" action="{% url 'userProfile' %}">
+          {% csrf_token %}
+
+          <select name="selectedElection" id="selected-election">
+            {% for election in elections %}
+            
+                   {%  if election.is_open %}
+            <option value="{{ election.id }}">{{ election.title }}</option>
+                   {% endif %}
+
+            {% endfor %}
+          </select>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i
+                class="fas fa-times-circle"></i> Close</button>
+            <button type="submit" class="btn btn-success btn-flat" name="add"><i class="fas fa-save"></i> Save</button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock modal %}

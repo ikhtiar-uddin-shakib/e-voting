@@ -1,0 +1,38 @@
+{% load static %}
+
+<div class=" bg-[#032245]">
+    <div class="px-24 mx-auto ">
+
+        <div class="flex justify-between pt-8 pb-4">
+            <div>
+                <a href="{% url 'home' %}"><img class="absolute h-14 w-44" src="{% static 'images/logo_t.png'%}"
+                        alt="Logo"></a>
+            </div>
+            <div>
+                <div class="flex gap-[20px] pt-2 text-white font-bold">
+
+                    {% if request.user.is_authenticated %}
+                    <a class="hover:bg-pink-500 hover:rounded-md hover:text-white px-2" href="{% url 'home' %}">Home</a>
+                    <a class="hover:bg-pink-400 hover:rounded-md hover:text-white px-2"
+                    href="{% url 'how_to_use' %}">How to use?</a>
+                    <a class="hover:bg-pink-500 hover:rounded-md hover:text-white px-2"
+                        href="{% url 'userProfile' %}">Welcome, {{ request.user.username }}</a>
+                    <a class="hover:bg-pink-500 hover:rounded-md hover:text-white px-2"
+                        href="{% url 'logout' %}">Logout</a>
+                   
+                    {% else %}
+
+                    <a class="hover:bg-pink-500 hover:rounded-md hover:text-white px-2" href="{% url 'home' %}">Home</a>
+                    <a class="hover:bg-pink-400 hover:rounded-md hover:text-white px-2"
+                        href="{% url 'how_to_use' %}">How to use?</a>
+                    <a class="hover:bg-pink-500 hover:rounded-md hover:text-white px-2"
+                        href="{% url 'login' %}">Login</a>
+                    <a class="hover:bg-pink-500 hover:rounded-md hover:text-white px-2"
+                        href="{% url 'register' %}">Register</a>
+                    
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

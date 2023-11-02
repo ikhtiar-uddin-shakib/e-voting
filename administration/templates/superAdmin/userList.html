@@ -1,0 +1,157 @@
+{% extends 'root.html' %}
+
+{% block head_title %} DUCSU | Users{% endblock %}
+
+
+{% block content %}
+<section class="content">
+  <div class="flex justify-center mb-2">
+    <h1 class="font-bold text-4xl text-blue-800">Users List</h1>
+  </div>
+
+  <div class="row">
+<div class="col-xs-12">
+<div class="box">
+
+  {% if voters %}
+
+<div class="box-body">
+  <table id="example1" class="table table-bordered">
+      <thead>
+        
+          <th>Email</th>
+          <th>Election</th>
+          <th>Account Type</th>
+          <th>Voted</th>
+          <th>Action</th>
+      </thead>
+      <tbody>
+    {% for voter in voters %}
+      
+    <tr>
+      <td>{{ voter.user.email }}</td> 
+      <td>{{ voter.election }}</td>
+      <td>{{ voter.account_type }}</td> 
+      <td>{% if voter.voted == True %}Yes{% else %}No{% endif %}</td>      
+
+      <td>
+        <button class='btn btn-success btn-sm edit btn-flat' data-id='{{ voter.id }}'><i class="fas fa-edit fa-sm"></i> Edit</button>
+        <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ voter.id }}'><i class="fas fa-trash-alt fa-sm"></i>Delete</button>
+      </td>
+    </tr>
+    {% endfor %}      
+
+    </tbody>
+  </table>
+</div>
+
+{% else %}
+
+<h2>No Voters yet!!</h2>
+
+{% endif %}
+</div>
+</div>
+</div>
+</section>
+
+{% endblock content %}
+
+{% block modal %}
+<!-- Edit -->
+<div class="modal fade" id="edit">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><b>Edit Voter</b></h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" method="POST" action="{% url 'updateVoter' %}">
+              {% csrf_token %}
+              <input type="hidden" class="id" name="id">
+              <p class="display_form">
+                
+              </p>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+            <button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fas fa-save"></i> Update</button>
+            </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Delete -->
+<div class="modal fade" id="delete">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><b>Deleting...</b></h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" method="POST" action="{% url 'deleteVoter' %}">
+              <input type="hidden" class="id" name="id">
+              {% csrf_token %}
+              <div class="text-center">
+                  <p>DELETE VOTER</p>
+                  <h2 class="bold email"></h2>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+          <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Delete</button>
+            </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+{% endblock modal %}
+
+
+
+{% block custom_js %}
+  
+<script>
+  $(function() {
+      $(document).on('click', '.edit', function(e) {
+          e.preventDefault();
+          $('#edit').modal('show');
+          var id = $(this).data('id');
+          getRow(id);
+      });
+
+      $(document).on('click', '.delete', function(e) {
+          e.preventDefault();
+          $('#delete').modal('show');
+          var id = $(this).data('id');
+          getRow(id);
+      });
+
+
+  });
+
+  function getRow(id) {
+      $.ajax({
+          type: 'GET',
+          url: '{% url "viewVoter" %}',
+          data: {
+              id: id
+          },
+          dataType: 'json',
+          success: function(response) {
+              $('.id').val(response.id);
+              $('.display_form').html(response.form);
+              $('.verified').val(response.verified);
+          }
+      });
+  }
+  </script>
+{% endblock custom_js %}
+  

@@ -1,0 +1,25 @@
+{% load static %}
+<header class="main-header py-6">
+  <!-- Logo -->
+  <a href=" {% url 'home' %}">
+    <div class="absolute">
+      <img style="width:18rem;" src="{% static 'images/logo_t.png' %}" alt="Logo">
+    </div>
+  </a>
+
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar navbar-static-top">
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="user-menu">
+            <span class="text-2xl font-bold fw-bold rounded bg-green-600 text-white px-2 py-1">Username : {{ request.user.username }}</span>
+          </li>
+        </ul>
+      </div>
+    </nav>
+</header>
+
+{% include "bio.html" %}

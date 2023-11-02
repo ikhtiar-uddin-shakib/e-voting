@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="bg-[#032245] text-gray">
+    <div style="max-width: 1240px; margin-left: 95px;">
+        <div class="flex justify-center item-center"> <img src="{% static 'images/ducsu_logo.png' %}"
+                style="height: 160px;" alt="logo"></div>
+        <div class="flex gap-10">
+            <div class="w-30 mt-3">
+                <ul class="sticky top-0 text-lg text-gray">
+                    <li class="font-bold hover:text-pink-400"><a href="#s1">Step 1 : Registration & Activation</a>
+                    </li>
+                    <li class="font-bold hover:text-pink-400"><a href="#s2">Step 2 : Logging In</a></li>
+                    <li class="font-bold hover:text-pink-400"><a href="#s3">Step 3 : User Interaction</a></li>
+                    <li class="font-bold hover:text-pink-400"><a href="#s4">Step 4 : Admin Access</a></li>
+                    <li class="font-bold hover:text-pink-400"><a href="#s5">Step 5 : Voter Participation</a></li>
+                </ul>
+            </div>
+            <div class="flex-auto w-64 pt-3 pb-3 px-0 font-light text-gray text-justify">
+                <div class="font-light mb-4" id="s1">
+                    <span class="font-bold mb-2">Registration and Activation</span> <br>
+                    <div class="px-5">
+                        Register for an account using a valid email address. An activation email will be sent to this
+                        address.
+                    </div>
+                </div>
+                <div class="font-light mb-4" id="s2">
+                    <span class="font-bold mb-4">Logging In</span> <br>
+                    <div class="px-5">
+                        Log in with your registered username and password.
+                    </div>
+                </div>
+                <div class="font-light mb-4" id="s3">
+                    <span class="font-bold">User Interaction
+                    </span> <br>
+                    <div class="px-5">
+                        Upon initial login, you will be recognized as a voter in our interface. If you wish to create an
+                        election, kindly reach out to us via our provided email or phone number. Alternatively, you can
+                        use
+                        the "CONTACT US" form on our homepage to get in touch.
+                    </div>
+                </div>
+                <div class="font-light mb-4" id="s4">
+                    <span class="font-bold mb-1">Admin Access
+                    </span> <br>
+                    <div class="px-5">
+                        <p class="font-semibold">Once logged in as an admin:
+                        </p>
+                        <ol class="px-5">
+                            <li> i. You can create an election. Please note that only one election can be created at a
+                                time. After an election is completed, you can create another by deleting the previous
+                                one.
+                            </li>
+                            <li> ii. You have the capability to create desired positions and candidates for the
+                                election,
+                                and you can manage them as needed.
+                                .
+                            </li>
+                            <li> iii. You have access to the voters list.
+                            </li>
+                            <li> v. From the Admin dashboard, you can access detailed information about the currently
+                                running election. In the event that any issues arise, you can reset the election by
+                                navigating to the "MORE INFO" section within the votes interface.</li>
+                            <li> vi. After the election concludes, you can generate result printouts with the winners in
+                                specific positions.
+                            </li>
+                            <li> vii. It is mandatory to delete the election after it concludes. This ensures that
+                                voters
+                                can participate in other elections.
+                            </li>
+                            <li> viii. If an admin wishes to vote, they can select the election they desire to vote in.
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="font-light mb-4" id="s5">
+                    <span class="font-bold mb-2">Voter Participation</span> <br>
+                    <div class="px-5">
+                        <p class="font-semibold">When logged in as a voter:</p>
+                        <ol class="px-5">
+                            <li> i. Select the election in which you wish to vote or choose your desired candidates.
+                            </li>
+                            <li> ii. Only currently running elections will be available for selection.
+                            </li>
+                            <li> iii. After casting your vote, you can preview your selected candidates and then submit
+                                your
+                                ballot.
+                            </li>
+                            <li> v. In the voter dashboard, you can access details about the election you have
+                                participated
+                                in.</li>
+                        </ol>
+                    </div>
+                </div>
+                <p class="mb-5">These steps outline the process of registration, administration, and participation in
+                    our
+                    election
+                    system, ensuring a seamless and professional experience for all users.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock content %}

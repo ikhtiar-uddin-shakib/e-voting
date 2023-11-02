@@ -1,0 +1,89 @@
+{% extends 'root.html' %}
+
+{% block head_title %} DUCSU | Messages{% endblock %}
+{% block content %}
+<section class="content">
+    <div class="flex justify-center mb-2">
+      <h1 class="font-bold text-4xl text-blue-800">Message List</h1>
+    </div>
+    <div class="row">
+  <div class="col-xs-12">
+  <div class="box">
+    {% if messages %}
+  
+  <div class="box-body">
+    <table id="example1"  class="table table-bordered">
+        <thead>
+            <th>Sender Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Message</th> 
+            <th>Action</th> 
+        </thead>
+        <tbody>
+      {% for msg in messages %}
+      <tr>
+        <td>{{ msg.name }}</td>
+        <td>{{ msg.email }}</td>
+        <td>{{ msg.phone }}</td>
+        <td>{{ msg.message }}</td>
+        <td>
+          {% if request.user.is_superuser %}
+          <a href="{% url 'delete_message' msg.id %}">
+            <button class="btn btn-danger btn-sm mt-2 btn-flat" name="delete"><i
+                    class="fas fa-trash-alt fa-sm"></i> Delete</button> 
+          {% endif %}
+  
+        </td>
+      </tr>
+      {% endfor %}      
+  
+      </tbody>
+      </table>
+      </div>
+  
+  {% else %}
+  <div class="box-header with-border">
+  
+  <h2>No Messages yet!!</h2>
+    
+  </div>
+  
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}
+
+
+{% block modal %}
+<!-- Delete -->
+<div class="modal fade" id="delete">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><b>Deleting...</b></h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" method="POST" action="{% url 'deleteElection' %}">
+              <input type="hidden" class="id" name="id">
+              {% csrf_token %}
+              <div class="text-center">
+                  <p>Delete Election</p>
+                  <h2 class="bold title"></h2>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+            <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fas fa-trash-alt fa-sm"></i> Delete</button>
+            </form>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock modal %}

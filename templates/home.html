@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block head_title %} DUCSU | Home{% endblock %}
+
+{% block content %}
+<div class="h-screen bg-[#032245]">
+    <div class="container px-24 mx-auto ">
+        <!--home page section-->
+        <div class="flex gap-[100px]">
+            <div class="text-sky-200 w-1/3 flex flex-col gap-10 pt-[100px]">
+                <div class="text-3xl font-bold">
+                    <h1>We Make Online Elections Easy and Affordable.</h1>
+                </div>
+                <div>
+                    <p>This Site is a secure online voting platform that makes it easy to run elections at a fraction of
+                        the usual cost. We're the leading provider of ranked choice elections, which help achieve more
+                        democratic outcomes by better representing the will of your voters.
+                    </p>
+                </div>
+                <div class="pt-5">
+                    <a href="{% url 'userProfile' %}" class="border-2 rounded-3xl p-2 text-white hover:border-pink-600 hover:text-white">Get Started</a>
+                </div>
+                <script src="//code.tidio.co/vd36pjv83zicyt5nqkdcouo4bnt5xnde.js" async></script>
+            </div>
+
+            <div>
+                <div class="pt-[5px] ">
+                    <img class="w-[800px]" src="static/images/home.png" alt="">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!--servicess section-->
+<div class="bg-blue-900 ">
+    <div class="px-24 mx-auto pb-20 text-center">
+        <div>
+            <h1 class="text-white text-3xl font-bold pt-10 pb-4">Our Voting <span class="text-pink-500">Services</span></h1>
+            <hr class="w-[400px] mx-auto">
+        </div>
+        <div class="flex justify-between  text-white gap-6">
+
+            <div class="mt-10  mx-auto text-center">
+                <div class="text-center">
+                    {% comment %} <img class=" h-28 mx-auto" src="static/images/poll.png" alt=""> {% endcomment %}
+                    <i class="fa-solid fa-check-to-slot mx-auto text-7xl pt-10"></i>
+                </div>
+                <h1 class="text-3xl text-center font-bold pb-2">Online Elections</h1>
+                <p>Send your voters an email with secure, single-use voting links that ensure only authorized voters can
+                    vote, once.</p>
+            </div>
+
+            <div class="mt-10  mx-auto text-center">
+                <div class="texte-center">
+                    <i class="fa-solid fa-square-poll-horizontal mx-auto text-7xl pt-10"></i>
+                </div>
+                <h1 class="text-3xl font-bold pb-2">Online Polls</h1>
+                <p>Create a personalized poll that anyone can vote on, and publish it using your website, email, or
+                    social media.</p>
+            </div>
+
+            <div class="mt-10  mx-auto text-center">
+                <div>
+                    <i class="fa-solid fa-earth-europe pt-10 text-7xl"></i>
+                </div>
+                <h1 class="text-3xl text-center font-bold pb-2">Automated Ballot Counts</h1>
+                <p>Count ranked ballots that you've already collected (using e.g., paper ballots or your own vote
+                    collection software).</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--works section-->
+
+<div class="bg-gray-300 ">
+    <div class="px-24 mx-auto pb-20 ">
+
+        <div class="flex justify-between ">
+            <div class="w-2/4">
+                <img src="static/images/com.png" alt="">
+            </div>
+            <div class="w-[500px] p-2">
+                <h1 class="text-4xl font-bold pt-14 pb-5 text-gray-900 ">We Also Works On</h1>
+                <p class="text-gray-700 ">
+                    Online makes it super easy to combine having on-site and offsite voters in your election.
+                    By using single-use code voters (which also come in handy when spouses share the same email
+                    address),
+                    you can have voters who can make it to your venue cast their vote in booths using PCs or tablets,
+                    and voters who can't make it cast their vote by email on their own devices. Once the voting ends,We
+                    will provide you with the final count directly, without any manual steps on your part.
+                    See our blog post for on-site elections for more details.
+                </p>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+<!--contact section-->
+<section class="contact pt-10 pb-10 bg-blue-900">
+    <div class="text-center shadow-md text-black">
+        <div>
+            <h1 class="text-4xl font-bold mt-10 pb-5 text-gray-200">Contact <span class="text-pink-500">Us!</span></h1>
+        </div>
+        <div class="flex justify-center">
+            <div class="w-1/2">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <p class="text-white font-bold">{{form}}</p>
+                    
+                    <div class="text-center pt-5 ">
+                        <button
+                            class="shadow-xl shadow-cyan-700/30 font-bold text-white text-xl p-2 border border-blue-500 rounded-xl hover:bg-sky-700 cursor-pointer"
+                            type="submit">Send Messege</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock content %}

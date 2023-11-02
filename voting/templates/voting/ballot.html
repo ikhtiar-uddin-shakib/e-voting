@@ -1,0 +1,231 @@
+{% extends 'root.html' %}
+
+{% block head_title %} DUCSU | Voting{% endblock %}
+
+{% block content %}
+<section class="content" style="max-height: 80vh; overflow-y: auto;">
+  <h1 class="page-header text-center title"><b>{{ election.title }}</b></h1>
+
+  {% if election.is_open %}
+
+  <!-- <div id="countdown" class="countdown-box flex justify-center text-3xl"
+    data-time-remaining="{{ time_remaining|default:0 }}">
+    <div class="countdown-text mb-5"> Election Ends In : </div>
+    <span id="countdown-timer" class="mb-5 text-red-500"> 00d 00h 00m 00s</span>
+  </div> -->
+  <div id="countdown" class="countdown-box flex justify-center font-bold text-3xl"
+    data-time-remaining="{{ time_remaining | default:0 }}">
+    <div class="countdown-text mb-5">Election Ends In : </div>
+    <span id="countdown-timer" class="mb-5">
+      <span class="rounded p-2 shadow-md bg-red-500 text-white">00d</span>
+      <span class="rounded p-2 shadow-md ml-2 bg-blue-500 text-white">00h</span>
+      <span class="rounded p-2 shadow-md ml-2 bg-yellow-500 text-black">00m</span>
+      <span class="rounded p-2 shadow-md ml-2 bg-green-500 text-white">00s</span>
+    </span>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <div class="alert alert-danger alert-dismissible" id="alert" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <span class="message"></span>
+      </div>
+
+      <form method="POST" id="ballotForm" action="{% url 'submit_ballot' %}">
+        {% csrf_token %}
+        <div class="bg-gray">
+          {{ ballot|safe }}
+        </div>
+        <div class="text-center">
+          <button type="button" class="btn btn-success btn-flat bg-green-500" id="preview"><i
+              class="fas fa-file-pdf fa-sm"></i></i> Preview</button>
+          <button type="submit" class="btn btn-primary bg-blue-500 btn-flat" name="submit_vote"><i
+              class="fas fa-vote-yea fa-sm"></i></i> Submit</button>
+        </div>
+      </form>
+    </div>
+    {% else %}
+
+    <div class="col-sm-10 col-sm-offset-1">
+      <div class="alert text-danger text-3xl">
+        <div class="text-center title">
+          {% if election_ended %}
+          <h2 class="mt-5"> Opps!! The election you were trying to access has ended.</h2>
+          <marquee width="50%" direction="left" height="100px">Thank you for your participation.</marquee>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock content %}
+
+{% block custom_js %}
+<script>
+  $(function () {
+    $('.content').iCheck({
+      checkboxClass: 'icheckbox_flat-green bg-green-500',
+      radioClass: 'iradio_flat-green'
+    });
+
+    $(document).on('click', '.reset', function (e) {
+      e.preventDefault();
+      var desc = $(this).data('desc');
+      $('.' + desc).iCheck('uncheck');
+    });
+
+    $(document).on('click', '.platform', function (e) {
+      e.preventDefault();
+      $('#bio').modal('show');
+      var platform = $(this).data('bio');
+      var fullname = $(this).data('fullname');
+      $('.candidate').html(fullname);
+      $('#plat_view').html(platform);
+    });
+
+    $('#preview').click(function (e) {
+      e.preventDefault();
+      var form = $('#ballotForm').serialize();
+      console.log(form);
+      if (form.search("&") < 0 || form == '') {
+        toastr.error('You must vote at least one candidate', "Preview Error");
+      } else {
+        $.ajax({
+          type: 'POST',
+          url: '{% url "preview_vote" %}',
+          data: form,
+          dataType: 'json',
+          success: function (response) {
+            if (response.error) {
+              var errmsg = '';
+              var messages = response.message;
+              for (i in messages) {
+                errmsg += messages[i];
+              }
+              toastr.error(errmsg, "Preview Error")
+            } else {
+              $('#preview_modal').modal('show');
+              $('#preview_body').html(response.list);
+            }
+          }
+        });
+      }
+
+    });
+
+  });
+
+  //  coundown 
+  var timeRemaining = parseInt(document.querySelector("#countdown").getAttribute("data-time-remaining"), 10);
+
+  function updateCountdown() {
+    if (timeRemaining > 0) {
+      var days = Math.floor(timeRemaining / (60 * 60 * 24));
+      var hours = Math.floor((timeRemaining % (60 * 60 * 24)) / (60 * 60));
+      var minutes = Math.floor((timeRemaining % (60 * 60)) / 60);
+      var seconds = timeRemaining % 60;
+
+      var countdownText = '';
+      if (days > 0) {
+        countdownText += days + "d ";
+      }
+      if (hours > 0) {
+        countdownText += hours + "h ";
+      }
+      if (minutes > 0) {
+        countdownText += minutes + "m ";
+      }
+      countdownText += seconds + "s";
+
+      document.getElementById('countdown-timer').innerHTML = countdownText;
+      timeRemaining--;
+    } else {
+      document.getElementById('countdown-timer').innerHTML = "Election has ended.";
+      clearInterval(countdownInterval);
+    }
+  }
+  var countdownInterval = setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+</script>
+
+{% endblock custom_js %}
+
+{% block modal %}
+<div class="modal fade" id="addnew">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><b>Select Election</b></h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="POST" action="{% url 'userProfile' %}">
+          {% csrf_token %}
+
+          <select name="selectedElection" id="selected-election">
+            {% for election in elections %}
+            <option value="{{ election.id }}">{{ election.title }}</option>
+            {% endfor %}
+          </select>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i
+                class="fas fa-times-circle"></i> Close</button>
+            <button type="submit" class="btn btn-success btn-flat" name="add"><i class="fas fa-save"></i> Save</button>
+          </div>
+
+        </form>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Details -->
+
+<div class="modal fade" id="bio">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><b><span class="candidate"></b></h4>
+      </div>
+      <div class="modal-body">
+        <p id="plat_view"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i
+            class="fas fa-times-circle"></i> Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Preview -->
+<div class="modal fade" id="preview_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Vote Preview</h4>
+      </div>
+      <div class="modal-body">
+        <div id="preview_body"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning btn-flat pull-left" data-dismiss="modal"><i
+            class="fas fa-times-circle"></i> Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock modal %}

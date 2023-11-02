@@ -1,0 +1,66 @@
+{% load static %}
+<aside class="main-sidebar">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="bg-blue-900">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+      <div class="pull-left info">
+    
+      </div>
+    </div>
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="mt-4 space-y-2">
+
+      {% if request.user.is_superuser %}
+      <li><a href="{% url 'messages' %}"
+            class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-comments fa-lg"></i>Messages</a></li>
+
+      <li><a href="{% url 'superAdminViewElections' %}"
+              class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-archive"></i>Election List</a></li>
+
+      <li><a href="{% url 'adminViewVoters' %}"
+                class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-id-card fa-lg"></i>User List</a></li>        
+
+      {% elif request.user.voter.account_type  == 'Admin' %}
+      <li><a href="{% url 'viewElections' %}"
+        class="py-2 px-4 text-2xl  text-white block hover:bg-white font-bold"><i
+              class="fas fa-archive"></i> Elections</a></li>
+
+      <li><a href="{% url 'userDashboard' %}"
+                  class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold">
+                  <i class="fas fa-chalkboard-teacher fa-lg"></i>Admin Dashboard</a></li>
+
+      <li><a href="{% url 'viewPositions' %}"
+                    class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-list-ul fa-lg"></i></i> Positions</a></li>
+
+      <li><a href="{% url 'viewCandidates' %}"
+                            class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-users fa-lg"></i></i> Candidates</a></li>
+      {% if request.user.voter.election %}                         
+      <li><a href="{% url 'adminViewVoters' %}"
+                                    class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-id-card fa-lg"></i></i> Voters</a></li>
+
+      {% endif %}                               
+
+      <li><a href="{% url 'ballot_position' %}"  class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-file-alt fa-lg"></i> <span>Ballot Position</span></a></li>
+                                  
+     {% endif %} 
+      <hr>
+    {% if request.user.voter.election %}
+      <li><a href="{% url 'userDashboard' %}"
+        class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-vote-yea fa-lg"></i></i>Voter Dashboard</a></li>
+        
+      <li><a href="{% url 'show_ballot' %}"
+        class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-file-alt fa-lg"></i> <span>Show Ballot</span></a></li>
+    {% endif %}
+           
+    <li><a href="{% url 'userProfile' %}"
+                  class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-user fa-lg"></i></i> <span>My profile</span></a></li>
+    <li><a href="{% url 'change_pass' %}" class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-unlock fa-lg"></i><span>Change Password</span></a></li>            
+
+    <li><a href="{% url 'logout' %}"
+                                      class="py-2 px-4 text-2xl text-white block hover:bg-white font-bold"><i class="fas fa-sign-out-alt fa-lg"></i></i> <span>Logout</span></a></li>     
+     
+
+</ul>
+  </section>
+</aside>
